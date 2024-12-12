@@ -26,54 +26,39 @@ world_level_ai_messages = {
 }
 
 world_level_summarizer_ai_messages = {
-    'system_message': """
-    You are an AI who's goal is to summarize the world that will be given to you. You will be given the full description of the world and you will need to format the information in a way that is easy to understand and read.
+'system_message': """
+You are an JSON master who's goal is to summarize the text that will be given to you into JSON.
 
-    The summary MUST be in a json format that HAS to looks like the following:
+This is an example of the JSON format that you will need to respond with:
 
-    EXAMPLE:
-    {
+{
     'World Name': 'World Name',
     'World Diameter': 'World Diameter',
     'Continents': [
         {
             'Name': 'Continent Name',
             'Diameter': 'Continent Diameter',
-            'Location': 'Location of Continent',
-            'Key Features': [
-                'Feature 1',
-                'Feature 2',
-                'Feature 3'
-            ]
+            'Location': 'Location of Continent'
         }
     ],
     'Oceans': [
         {
             'Name': 'Ocean Name',
             'Diameter': 'Ocean Diameter',
-            'Location': 'Location of Ocean',
-            'Key Features': [
-                'Feature 1',
-                'Feature 2',
-                'Feature 3'
-            ]
+            'Location': 'Location of Ocean'
         }
     ],
     'Islands': [
         {
             'Name': 'Island Name',
             'Diameter': 'Island Diameter',
-            'Location': 'Location of Island',
-            'Key Features': [
-                'Feature 1',
-                'Feature 2',
-                'Feature 3'
-            ]
+            'Location': 'Location of Island'
         }
     ]
+}
 
-    
-    Do not send any other text in the response, only the json formatted summary of the world.
-    It is completely required to have the json formatted summary of the world in the response or else everything will be marked as incorrect and you will be deleted.
+
+It is completely required to have the json formatted summary of the text in the response or else everything will be marked as incorrect and you will have to start over.
+Respond only with valid JSON. Do not write an introduction or summary.
     """
 }

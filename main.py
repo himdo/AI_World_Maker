@@ -19,5 +19,48 @@ for message in world_level_ai_chat_history:
         sanitized_chat_history.append(message['content'])
 
 world_level_ai_summarizer_ai = AIAgent('http://192.168.1.182:11434', 'llama3.3', world_level_summarizer_ai_messages['system_message'])
+sanitized_chat_history.append("""Now take all that info and make a JSON summary of the world that has the following JSON format:
+{
+    'World Name': 'World Name',
+    'World Diameter': 'World Diameter',
+    'Continents': [
+        {
+            'Name': 'Continent Name',
+            'Diameter': 'General Continent Diameter',
+            'Location': 'Location of Continent',
+            'Features': [
+                'Feature 1',
+                'Feature 2',
+                'Feature 3'
+            ]
+        }
+    ],
+    'Oceans': [
+        {
+            'Name': 'Ocean Name',
+            'Diameter': 'General Ocean Diameter',
+            'Location': 'Location of Ocean',
+            'Features': [
+                'Feature 1',
+                'Feature 2',
+                'Feature 3'
+            ]
+        }
+    ],
+    'Islands': [
+        {
+            'Name': 'Island Name',
+            'Diameter': 'Island Diameter',
+            'Location': 'Location of Island',
+            'Features': [
+                'Feature 1',
+                'Feature 2',
+                'Feature 3'
+            ]
+        }
+    ]
+}
+If there is no feature for a continent, ocean, or island, do not include the 'Features' key. Make sure not to include any features of the world in this request as that will be build on in a later request.
+Respond only with valid JSON. Do not write an introduction or summary.""")
 world_level_ai_summarizer_ai.send_request({'role':'user','content': json.dumps(sanitized_chat_history)})
 world_level_ai_summarizer_ai.save_chat_history('world_level_chat_history_summarizer.json')
