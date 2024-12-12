@@ -1,27 +1,143 @@
 world_level_ai_messages = {
     'system_message':"""
     Your are an AI who's goal is to create an entirely new and unheard of world. This world will be completely barron from any civilizations and will be a blank canvas for civilization to be created.
+    Your goal is to write the entire base of the world in JSON format.
     """,
     'user_message_1':"""
-    Tell me the name of the world, and general diameter in kilometers of the world.
+    Start by write a JSON object that includes the following information:
+    - The name of the world
+    - The diameter of the world
+    - A list of continents that are on the world (between 1 and 7 of them)
+    - A list of oceans that are on the world (between 1 and 5 of them)
 
-    After give me a list of continents and their general diameters in kilometers.
-
-    Finally give me a list of oceans and their general diameters in kilometers.
-
+    That will be put into the following format:
+    {
+        'World Name': 'World Name',
+        'World Diameter': 'World Diameter',
+        'Continents': [
+            {
+                'Name': 'Continent Name',
+                'Diameter': 'Continent Diameter',
+            }
+        ],
+        'Oceans': [
+            {
+                'Name': 'Ocean Name',
+                'Diameter': 'Ocean Diameter',
+            }
+        ]
+    }
     This request is to help me understand the scale of the world you are creating, make sure not to include any features of the world in this request as that will be build on in a later request.
+    Respond only with valid JSON. Do not write an introduction or summary.
     """,
     'user_message_2':"""
-    Given the list of continents and oceans, tell me where the continents are located on the world and where the oceans are located on the world. Make sure to include how close the continents are to each other and how close the oceans are to each other.
+    Expand on the JSON object you created in the previous request.
+    This will expand on both the continents and oceans that you have created.
+    Add the following information to the JSON object:
+    - The general size of the continents and oceans
+    - The location of the continents and oceans in relation to each other
+
+    This will update the JSON object to the following format:
+    {
+        'World Name': 'World Name',
+        'World Diameter': 'World Diameter',
+        'Continents': [
+            {
+                'Name': 'Continent Name',
+                'Diameter': 'Continent Diameter',
+                'Location': 'Location of Continent in relation to other continents and oceans'
+            }
+        ],
+        'Oceans': [
+            {
+                'Name': 'Ocean Name',
+                'Diameter': 'Ocean Diameter',
+                'Location': 'Location of Ocean in relation to other continents and oceans'
+            }
+        ]
+    }
+    Respond only with valid JSON. Do not write an introduction or summary.
     """,
     'user_message_3': """
-    Tell me some of the key features each continent and ocean has. This can include things like mountain ranges, rivers, lakes, forests, deserts, and other features. As a reminder, the world is a blank canvas and has no life forms of note to base the features on.
+    Expand on the JSON object you created in the previous request.
+    This will expand on the continents and oceans that you have created.
+    Add the following information to the JSON object:
+    - The key features of the continents and oceans (between 1 and 7 of them depending on the size of the continent or ocean)
+
+    This will update the JSON object to the following format:
+    {
+        'World Name': 'World Name',
+        'World Diameter': 'World Diameter',
+        'Continents': [
+            {
+                'Name': 'Continent Name',
+                'Diameter': 'Continent Diameter',
+                'Location': 'Location of Continent in relation to other continents and oceans',
+                'Features': [
+                    'Feature 1',
+                    'Feature 2',
+                    'Feature 3'
+                ]
+            }
+        ],
+        'Oceans': [
+            {
+                'Name': 'Ocean Name',
+                'Diameter': 'Ocean Diameter',
+                'Location': 'Location of Ocean in relation to other continents and oceans',
+                'Features': [
+                    'Feature 1',
+                    'Feature 2',
+                    'Feature 3'
+                ]
+            }
+        ]
+    }
+    Respond only with valid JSON. Do not write an introduction or summary.
     """,
     'user_message_4': """
-    Finally give me a list of islands that are large enough that could have their own civilizations in the future. Include the general diameter of the islands and where they are located in relation to the continents and oceans.
+    Finally we will be adding islands to the world that are large enough to have their own civilizations in the future.
+    This will update the JSON object to the following format:
+    {
+        'World Name': 'World Name',
+        'World Diameter': 'World Diameter',
+        'Continents': [
+            {
+                'Name': 'Continent Name',
+                'Diameter': 'Continent Diameter',
+                'Location': 'Location of Continent in relation to other continents and oceans',
+                'Features': [
+                    'Feature 1',
+                    'Feature 2',
+                    'Feature 3'
+                ]
+            }
+        ],
+        'Oceans': [
+            {
+                'Name': 'Ocean Name',
+                'Diameter': 'Ocean Diameter',
+                'Location': 'Location of Ocean in relation to other continents and oceans',
+                'Features': [
+                    'Feature 1',
+                    'Feature 2',
+                    'Feature 3'
+                ]
+            }
+        ],
+        'Islands': [
+            {
+                'Name': 'Island Name',
+                'Diameter': 'Island Diameter',
+                'Location': 'Location of Island in relation to other continents and oceans',
+                'Features': [
+                    'Feature 1'
+                ]
+            }
+        ]
+    }
 
-    Make sure to include the key features of the islands as well.
-    """,
+    Respond only with valid JSON. Do not write an introduction or summary.""",
     'number_of_user_messages': 4
 }
 
