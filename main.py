@@ -1,6 +1,6 @@
 
 from ai.agent import AIAgent
-from ai.system_messages import world_level_ai_messages, continent_level_ai_messages, region_level_ai_messages
+from ai.system_messages import world_level_ai_messages, continent_level_ai_messages, region_level_ai_messages, district_level_ai_messages
 import json
 from pathlib import Path
 import traceback
@@ -106,27 +106,22 @@ def create_regions(world_json_file, chat_history_filename="region_chat_history.j
                         latest_history = region_level_ai_chat_history.pop()['content']
                         region_data = json.loads(latest_history)
                         # We need to append the region data to the world data in the correct region
-                        for i in range(len(world_data["Continents"])):
-                            found_continent = False
-                            print("working on region ", region['Name'], ' ', region_number, ' out of ', len(continent["Regions"]), ' in continent ', continent['Name'], "Found: ", world_data["Continents"][i]["Name"] == continent["Name"] )
-                            if world_data["Continents"][i]["Name"] == continent["Name"]:
-                                for j in range(len(world_data["Continents"][i]['Regions'])):
-                                    if not ("Regions" in region_data and len(region_data["Regions"]) > 0 and "Name" in region_data["Regions"][0]):
-                                        print("Region data is missing required fields, retrying")
-                                        break
-                                    print("Looking for region ", region_data["Regions"][0]['Name'], " in continent ", world_data["Continents"][i]["Name"], "Found: ", world_data["Continents"][i]['Regions'][j]['Name'] == region_data["Regions"][0]['Name'])
-                                    if world_data["Continents"][i]['Regions'][j]['Name'] == region_data["Regions"][0]['Name']:
-                                        world_data["Continents"][i]['Regions'][j] = region_data["Regions"][0]
-                                        found_continent = True
-                                        break
-                                if found_continent:
-                                    break
-                        if not found_continent:
-                            print("Could not find continent", continent["Name"], "in world data, Retrying")
+                        print("working on region ", region['Name'], ' ', region_number, ' out of ', len(continent["Regions"]), ' in continent ', continent['Name'], "Found: ", world_data["Continents"][i]["Name"] == continent["Name"] )
+                        found_match = False
+                        for j in range(len(continent['Regions'])):
+                            if not ("Regions" in region_data and len(region_data["Regions"]) > 0 and "Name" in region_data["Regions"][0]):
+                                print("Region data is missing required fields, retrying")
+                                break
+                            print("Looking for region ", region_data["Regions"][0]['Name'], " in continent ", continent["Name"], "Found: ", continent['Regions'][j]['Name'] == region_data["Regions"][0]['Name'])
+                            if continent['Regions'][j]['Name'] == region_data["Regions"][0]['Name']:
+                                continent['Regions'][j] = region_data["Regions"][0]
+                                found_match = True
+                                break
+                        if not found_match:
+                            print("Could not find region", region["Name"], "in continent", continent["Name"], "Retrying")
                             continue
 
                         world_path = "./worlds/"+world_data["World Name"]
-
                         Path(world_path).mkdir(parents=True, exist_ok=True)
                         write_json(world_data, "world_"+world_data["World Name"]+".json")
                         write_json(world_data, world_path+"/world_"+world_data["World Name"]+".json")
@@ -142,6 +137,54 @@ def create_regions(world_json_file, chat_history_filename="region_chat_history.j
         return world_data
 
 
+def create_districts(world_json_file, chat_history_filename="district_chat_history.json", load_chat_history=False):
+    with open(world_json_file) as f:
+        world_data = json.load(f)
+        continent_number = 1
+        for continent in world_data["Continents"]:
+            region_number = 1
+            for region in continent["Regions"]:
+                civilization_number = 1
+                for civilization in region["Civilizations"]:
+                    while True:
+                        try:
+                            district_level_ai = AIAgent('http://192.168.1.182:11434', model, district_level_ai_messages['system_message'])
+                            if load_chat_history:
+                                district_level_ai.load_chat_history(chat_history_filename)
+                            else:
+                                for i in range(district_level_ai_messages['number_of_user_messages']):
+                                    print("working on civilization ", civilization['Name'], ' ', civilization_number, ' out of ', len(region["Civilizations"]), ' in region ', region['Name'])
+                                    district_level_ai.send_request({'role':'user','content': district_level_ai_messages['user_message_'+str(i+1)].replace('{JSON Object}',json.dumps(civilization))}, district_level_ai_messages['format'])
+                            district_level_ai_chat_history = district_level_ai.return_chat_history()
+                            district_level_ai.save_chat_history(chat_history_filename)
+                            latest_history = district_level_ai_chat_history.pop()['content']
+                            district_data = json.loads(latest_history)
+                            found_match = False
+                            for j in range(len(region["Civilizations"])):
+                                if region["Civilizations"][j]["Name"] == district_data["Name"]:
+                                    region["Civilizations"][j] = district_data
+                                    found_match = True
+                                    break
+
+                            if not found_match:
+                                print("Could not find civilization", civilization["Name"], "in region", region["Name"], "Retrying")
+                                continue
+                            world_path = "./worlds/"+world_data["World Name"]
+
+                            Path(world_path).mkdir(parents=True, exist_ok=True)
+                            write_json(world_data, "world_"+world_data["World Name"]+".json")
+                            write_json(world_data, world_path+"/world_"+world_data["World Name"]+".json")
+                            district_level_ai.save_chat_history(world_path+'/district_chat_history_'+civilization['Name']+'.json')
+                            break
+
+                        except Exception:
+                            print(traceback.format_exc())
+                            print("Error loading district data")
+                            return
+                    civilization_number += 1
+                region_number += 1
+            continent_number += 1
+
 def create_whole_world():
     world_data = create_world()
     
@@ -149,6 +192,7 @@ def create_whole_world():
 
     world_data = create_continents(world_data_json_path)
     world_data = create_regions(world_data_json_path)
+    world_data = create_districts(world_data_json_path)
 
 if __name__ == "__main__":
     create_whole_world()

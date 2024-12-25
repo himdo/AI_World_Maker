@@ -218,7 +218,7 @@ The new JSON object should follow the following format and make sure not to remo
         {
             "Name": "<Civilization Name>",
             "Type": "<Civilization Type (City, Large Town, Small Town, Village, Hamlet)>",
-            "Population": <Population as Number, this should based on the Civilization Type)>,
+            "Population": <Population as Number, this should based on the Civilization Type>,
             "Diameter in km": "<Civilization Diameter>",
             "Government": "<Government Type>",
             "Position": ["<Latitude>", "<Longitude>"],
@@ -309,3 +309,80 @@ Respond only with valid JSON. Do not write an introduction or summary.
     },
     "number_of_user_messages": 1
 }
+
+district_level_ai_messages = {
+    "system_message": """
+You are an AI who"s goal is to create an entirely new and unheard of world. With the goal of adding more detail to the world, you will be adding a new districts to a given civilization.
+These districts need to be unique and have a purpose in the civilization.
+    """,
+    "user_message_1": """
+Generate 1 to 10 districts for the civilization depending on population and type of civilization. A City will have more districts than a town or village. Where as a Hamlet might only have 1 district.
+A City should have between 5 and 10 districts, a Large Town should have between 3 and 7 districts, a Small Town should have between 2 and 5 districts, a Village should have between 1 and 3 districts, and a Hamlet should have 1 district.
+Each Civilization should have at least 1 Residential District.
+
+Update the following JSON object:
+{JSON Object}
+
+The new JSON object should follow the following format and make sure not to remove any of the existing data:
+{
+    "Name": "<Civilization Name>",
+    "Type": "<Civilization Type (City, Large Town, Small Town, Village, Hamlet)>",
+    "Population": <Population as Number>,
+    "Diameter in km": "<Civilization Diameter>",
+    "Government": "<Government Type>",
+    "Position": ["<Latitude>", "<Longitude>"],
+    "Description": "<Civilization Description>",
+    "Districts": [
+        {
+            "Name": "<District Name>",
+            "Type": "<District Type (Residential, Commercial, Industrial, Agricultural, Government, Recreational, Educational, Religious)>",
+            "Population": <Population as Number>,
+            "Diameter in km": "<District Diameter>",
+            "Position": ["<Latitude>", "<Longitude>"],
+            "Description": "<District Description>"
+        }
+    ]
+}
+
+Make sure to make the Districts unique and have a purpose in the civilization.
+Make sure the total Population of the Districts does not exceed the Population of the Civilization.
+Again, make sure not to remove any of the existing data or create any objects not in the format above.
+Respond only with valid JSON. Do not write an introduction or summary.
+    """,
+    "format": {
+        "type": "object",
+        "properties": {
+            "Name": {"type": "string"},
+            "Type": {"type": "string"},
+            "Population": {"type": "number"},
+            "Diameter in km": {"type": "number"},
+            "Government": {"type": "string"},
+            "Position": {
+                "type": "array",
+                "items": {"type": "string"}
+            },
+            "Description": {"type": "string"},
+            "Districts": {
+                "type": "array",
+                "items": {
+                    "type": "object",
+                    "properties": {
+                        "Name": {"type": "string"},
+                        "Type": {"type": "string"},
+                        "Population": {"type": "number"},
+                        "Diameter in km": {"type": "number"},
+                        "Position": {
+                            "type": "array",
+                            "items": {"type": "string"}
+                        },
+                        "Description": {"type": "string"}
+                    },
+                    "required": ["Name", "Type", "Population", "Diameter in km", "Position", "Description"]
+                }
+            }
+        },
+        "required": ["Name", "Type", "Population", "Diameter in km", "Government", "Position", "Description", "Districts"]
+    },
+    "number_of_user_messages": 1
+}
+
