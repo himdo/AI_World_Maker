@@ -12,7 +12,7 @@ class AIAgent:
         self.chat_history = []
         self.chat_history.append({'role': 'system', 'content': system_message})
 
-    def send_request(self, message):
+    def send_request(self, message, format=None):
         headers = {
             'Content-Type': 'application/json'
         }
@@ -22,12 +22,16 @@ class AIAgent:
             'messages': self.chat_history,
             'stream': False
         }
+        if format:
+            data['format'] = format
+        # print("Sending request to AI model", data)
         response = requests.post(self.api_base_url+'/api/chat', headers=headers, json=data)
         if response.status_code == 200:
             result = response.json()['message']
             self.chat_history.append(result)
             return result['content']
         else:
+            print(response.text)
             response.raise_for_status()
 
     def save_chat_history(self, file_path):
