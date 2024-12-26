@@ -2,8 +2,8 @@
 
 world_level_ai_messages = {
     "system_message":"""
-Your are an AI who"s goal is to create an entirely new and unheard of world. This world will be completely barron from any civilizations and will be a blank canvas for civilization to be created.
-Your goal is to write the entire base of the world in JSON format.
+    Your are an AI who"s goal is to create an entirely new and unheard of world. This world will be completely barron from any civilizations and will be a blank canvas for civilization to be created.
+    Your goal is to write the entire base of the world in JSON format.
     """,
     "user_message_1":"""
     Start by write a JSON object that includes the following information:
@@ -109,37 +109,37 @@ Your goal is to write the entire base of the world in JSON format.
 
 continent_level_ai_messages = {
     "system_message": """
-our are an AI who"s goal is to create an entirely new and unheard of world. This world will be completely barron from any civilizations and will be a blank canvas for civilization to be created.
-Your goal is to write a single continent of the world in JSON format.
-""",
+    our are an AI who"s goal is to create an entirely new and unheard of world. This world will be completely barron from any civilizations and will be a blank canvas for civilization to be created.
+    Your goal is to write a single continent of the world in JSON format.
+    """,
     "user_message_1": """
-Update the following JSON object:
-{JSON Object}
+    Update the following JSON object:
+    {JSON Object}
 
-The new JSON object should follow the following format and make sure not to remove any of the existing data:
-{
-    "Name": "<Continent Name>",
-    "Diameter in km": "<Continent Diameter>",
-    "Position": ["<Latitude>", "<Longitude>"],
-    "Features": ["<Feature 1>", "<Feature 2>"],
-    "Climate": {
-        "Average Temperature in C": <Temperature as Number>,
-        "Weather Patterns": "<Weather Patterns>"
-    },
-    "Regions": [
-        {
-            "Name": "<Region Name>",
-            "Diameter in km": "<Region Diameter>",
-            "Position": ["<Latitude>", "<Longitude>"],
-            "Landmarks": [{"Name": "<Landmark Name>", "Type": "<Landmark Type>", "Myth": "<Landmark Myth>"}],
-            "Resources": ["<Resource 1>", "<Resource 2>"]
-        }
-    ]
-}
-Depending on the size of the continent, the number of features, regions, landmarks, and resources can vary.
-Again, make sure not to remove any of the existing data or create any objects not in the format above.
-Respond only with valid JSON. Do not write an introduction or summary.
-""",
+    The new JSON object should follow the following format and make sure not to remove any of the existing data:
+    {
+        "Name": "<Continent Name>",
+        "Diameter in km": "<Continent Diameter>",
+        "Position": ["<Latitude>", "<Longitude>"],
+        "Features": ["<Feature 1>", "<Feature 2>"],
+        "Climate": {
+            "Average Temperature in C": <Temperature as Number>,
+            "Weather Patterns": "<Weather Patterns>"
+        },
+        "Regions": [
+            {
+                "Name": "<Region Name>",
+                "Diameter in km": "<Region Diameter>",
+                "Position": ["<Latitude>", "<Longitude>"],
+                "Landmarks": [{"Name": "<Landmark Name>", "Type": "<Landmark Type>", "Myth": "<Landmark Myth>"}],
+                "Resources": ["<Resource 1>", "<Resource 2>"]
+            }
+        ]
+    }
+    Depending on the size of the continent, the number of features, regions, landmarks, and resources can vary.
+    Again, make sure not to remove any of the existing data or create any objects not in the format above.
+    Respond only with valid JSON. Do not write an introduction or summary.
+    """,
     "format": {
         "type": "object",
         "properties": {
@@ -200,39 +200,39 @@ Respond only with valid JSON. Do not write an introduction or summary.
 
 region_level_ai_messages = {
     "system_message": """
-our are an AI who"s goal is to create an entirely new and unheard of world. This world will be completely barron from any civilizations and will be a blank canvas for civilization to be created.
-Your goal is to write a single region of the world in JSON format and start populating the regions for civilization to be put in.
-""",
+    our are an AI who"s goal is to create an entirely new and unheard of world. This world will be completely barron from any civilizations and will be a blank canvas for civilization to be created.
+    Your goal is to write a single region of the world in JSON format and start populating the regions for civilization to be put in.
+    """,
     "user_message_1": """
-Update the following JSON object:
-{JSON Object}
+    Update the following JSON object:
+    {JSON Object}
 
-The new JSON object should follow the following format and make sure not to remove any of the existing data:
-{
-    "Name": "<Region Name>",
-    "Diameter in km": "<Region Diameter>",
-    "Position": ["<Latitude>", "<Longitude>"],
-    "Landmarks": [{"Name": "<Landmark Name>", "Type": "<Landmark Type>", "Myth": "<Landmark Myth>"}],
-    "Resources": ["<Resource 1>", "<Resource 2>"],
-    "Civilizations": [
-        {
-            "Name": "<Civilization Name>",
-            "Type": "<Civilization Type (City, Large Town, Small Town, Village, Hamlet)>",
-            "Population": <Population as Number, this should based on the Civilization Type>,
-            "Diameter in km": "<Civilization Diameter>",
-            "Government": "<Government Type>",
-            "Position": ["<Latitude>", "<Longitude>"],
-            "Description": "<Civilization Description>"
-        }
-    ]
-}
-Depending on the size of the region, the Type will vary which will make the Population vary.
-Make sure to make to create 3 to 9 civilizations in the region depending on the size of the region.
+    The new JSON object should follow the following format and make sure not to remove any of the existing data:
+    {
+        "Name": "<Region Name>",
+        "Diameter in km": "<Region Diameter>",
+        "Position": ["<Latitude>", "<Longitude>"],
+        "Landmarks": [{"Name": "<Landmark Name>", "Type": "<Landmark Type>", "Myth": "<Landmark Myth>"}],
+        "Resources": ["<Resource 1>", "<Resource 2>"],
+        "Civilizations": [
+            {
+                "Name": "<Civilization Name>",
+                "Type": "<Civilization Type (City, Large Town, Small Town, Village, Hamlet)>",
+                "Population": <Population as Number, this should based on the Civilization Type>,
+                "Diameter in km": "<Civilization Diameter>",
+                "Government": "<Government Type>",
+                "Position": ["<Latitude>", "<Longitude>"],
+                "Description": "<Civilization Description>"
+            }
+        ]
+    }
+    Depending on the size of the region, the Type will vary which will make the Population vary.
+    Make sure to make to create 3 to 9 civilizations in the region depending on the size of the region.
 
-Again, make sure not to remove any of the existing data or create any objects not in the format above.
-You Can Not create any new regions or continents, only update the existing region.
-Respond only with valid JSON. Do not write an introduction or summary.
-""",
+    Again, make sure not to remove any of the existing data or create any objects not in the format above.
+    You Can Not create any new regions or continents, only update the existing region.
+    Respond only with valid JSON. Do not write an introduction or summary.
+    """,
     "format": {
         "type": "object",
         "properties": {
@@ -312,42 +312,42 @@ Respond only with valid JSON. Do not write an introduction or summary.
 
 district_level_ai_messages = {
     "system_message": """
-You are an AI who"s goal is to create an entirely new and unheard of world. With the goal of adding more detail to the world, you will be adding a new districts to a given civilization.
-These districts need to be unique and have a purpose in the civilization.
+    You are an AI who"s goal is to create an entirely new and unheard of world. With the goal of adding more detail to the world, you will be adding a new districts to a given civilization.
+    These districts need to be unique and have a purpose in the civilization.
     """,
     "user_message_1": """
-Generate 1 to 10 districts for the civilization depending on population and type of civilization. A City will have more districts than a town or village. Where as a Hamlet might only have 1 district.
-A City should have between 5 and 10 districts, a Large Town should have between 3 and 7 districts, a Small Town should have between 2 and 5 districts, a Village should have between 1 and 3 districts, and a Hamlet should have 1 district.
-Each Civilization should have at least 1 Residential District.
+    Generate 1 to 10 districts for the civilization depending on population and type of civilization. A City will have more districts than a town or village. Where as a Hamlet might only have 1 district.
+    A City should have between 5 and 10 districts, a Large Town should have between 3 and 7 districts, a Small Town should have between 2 and 5 districts, a Village should have between 1 and 3 districts, and a Hamlet should have 1 district.
+    Each Civilization should have at least 1 Residential District.
 
-Update the following JSON object:
-{JSON Object}
+    Update the following JSON object:
+    {JSON Object}
 
-The new JSON object should follow the following format and make sure not to remove any of the existing data:
-{
-    "Name": "<Civilization Name>",
-    "Type": "<Civilization Type (City, Large Town, Small Town, Village, Hamlet)>",
-    "Population": <Population as Number>,
-    "Diameter in km": "<Civilization Diameter>",
-    "Government": "<Government Type>",
-    "Position": ["<Latitude>", "<Longitude>"],
-    "Description": "<Civilization Description>",
-    "Districts": [
-        {
-            "Name": "<District Name>",
-            "Type": "<District Type (Residential, Commercial, Industrial, Agricultural, Government, Recreational, Educational, Religious)>",
-            "Population": <Population as Number>,
-            "Diameter in km": "<District Diameter>",
-            "Position": ["<Latitude>", "<Longitude>"],
-            "Description": "<District Description>"
-        }
-    ]
-}
+    The new JSON object should follow the following format and make sure not to remove any of the existing data:
+    {
+        "Name": "<Civilization Name>",
+        "Type": "<Civilization Type (City, Large Town, Small Town, Village, Hamlet)>",
+        "Population": <Population as Number>,
+        "Diameter in km": "<Civilization Diameter>",
+        "Government": "<Government Type>",
+        "Position": ["<Latitude>", "<Longitude>"],
+        "Description": "<Civilization Description>",
+        "Districts": [
+            {
+                "Name": "<District Name>",
+                "Type": "<District Type (Residential, Commercial, Industrial, Agricultural, Government, Recreational, Educational, Religious)>",
+                "Population": <Population as Number>,
+                "Diameter in km": "<District Diameter>",
+                "Position": ["<Latitude>", "<Longitude>"],
+                "Description": "<District Description>"
+            }
+        ]
+    }
 
-Make sure to make the Districts unique and have a purpose in the civilization.
-Make sure the total Population of the Districts does not exceed the Population of the Civilization.
-Again, make sure not to remove any of the existing data or create any objects not in the format above.
-Respond only with valid JSON. Do not write an introduction or summary.
+    Make sure to make the Districts unique and have a purpose in the civilization.
+    Make sure the total Population of the Districts does not exceed the Population of the Civilization.
+    Again, make sure not to remove any of the existing data or create any objects not in the format above.
+    Respond only with valid JSON. Do not write an introduction or summary.
     """,
     "format": {
         "type": "object",
@@ -382,6 +382,385 @@ Respond only with valid JSON. Do not write an introduction or summary.
             }
         },
         "required": ["Name", "Type", "Population", "Diameter in km", "Government", "Position", "Description", "Districts"]
+    },
+    "number_of_user_messages": 1
+}
+
+subdistrict_level_ai_messages = {
+    "system_message": """
+    You are an AI who"s goal is to create an entirely new and unheard of world. With the goal of adding more detail to the world, you will be adding a new subdistricts to a given district.
+    These subdistricts need to be unique and have a purpose in the district. There needs to be enough subdistricts to fill the district completely.
+    Your goal is to add some granularity to the districts by adding subdistricts.
+    """,
+    "user_message_1": """
+    Generate 1 to 10 subdistricts for the district depending on the size of the district. A smaller district will have less subdistricts than a larger district.
+    The goal of this is to split the district into smaller areas so that the civilization can be more detailed.
+
+    Update the following JSON object:
+    {JSON Object}
+
+    The new JSON object should follow the following format and make sure not to remove any of the existing data:
+    {
+        "Name": "<District Name>",
+        "Type": "<District Type (Residential, Commercial, Industrial, Agricultural, Government, Recreational, Educational, Religious)>",
+        "Population": <Population as Number>,
+        "Diameter in km": "<District Diameter>",
+        "Position": ["<Latitude>", "<Longitude>"],
+        "Description": "<District Description>",
+        "Subdistricts": [
+            {
+                "Name": "<Subdistrict Name>",
+                "Population": <Population as Number>,
+                "Diameter in km": "<Subdistrict Diameter>",
+                "Position": ["<Latitude>", "<Longitude>"],
+                "Description": "<Subdistrict Description>",
+                "Buildings of Interest": [{"Name": "<Building Name>", "Type": "<Building Type (House, Shop, Other)>", "Description": "<Building Description>"}]
+            }
+        ]
+    }
+
+    Make sure to make the Subdistricts unique and have a purpose in the district.
+    Make sure the total Population of the Subdistricts does not exceed the Population of the District.
+    The number of Buildings of Interest should be between 1 and 5 depending on the size of the Subdistrict.
+
+    Again, make sure not to remove any of the existing data or create any objects not in the format above.
+    Respond only with valid JSON. Do not write an introduction or summary.
+    """,
+    "format": {
+        "type": "object",
+        "properties": {
+            "Name": {"type": "string"},
+            "Type": {"type": "string"},
+            "Population": {"type": "number"},
+            "Diameter in km": {"type": "number"},
+            "Position": {
+                "type": "array",
+                "items": {"type": "string"}
+            },
+            "Description": {"type": "string"},
+            "Subdistricts": {
+                "type": "array",
+                "items": {
+                    "type": "object",
+                    "properties": {
+                        "Name": {"type": "string"},
+                        "Population": {"type": "number"},
+                        "Diameter in km": {"type": "number"},
+                        "Position": {
+                            "type": "array",
+                            "items": {"type": "string"}
+                        },
+                        "Description": {"type": "string"},
+                        "Buildings of Interest": {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "Name": {"type": "string"},
+                                    "Type": {"type": "string"},
+                                    "Description": {"type": "string"}
+                                },
+                                "required": ["Name", "Type", "Description"]
+                            }
+                        }
+                    },
+                    "required": ["Name", "Population", "Diameter in km", "Position", "Description", "Buildings of Interest"]
+                }
+            }
+        },
+        "required": ["Name", "Population", "Diameter in km", "Position", "Description", "Subdistricts"]
+    },
+    "number_of_user_messages": 1
+}
+
+house_level_ai_messages = {
+    "system_message": """
+    You are an AI who"s goal is to create an entirely new and unheard of world. With the goal of adding more detail to the world, you will be adding a new houses/shops to a given subdistrict.
+    These houses/shops need to be unique and have a purpose in the subdistrict. There needs to be enough houses/shops to fill the subdistrict completely.
+    """,
+    "user_message_1": """
+    Generate 5 to 30 houses/shops for the subdistrict depending on the size of the subdistrict. A smaller subdistrict will have less houses/shops than a larger subdistrict.
+    Theses houses/shops need to be unique and have a purpose in the subdistrict. There needs to be enough houses/shops to fill the subdistrict completely.
+    You need to make sure to include all the "Buildings of Interest" in the subdistrict in the houses/shops.
+
+    Update the following JSON object:
+    {JSON Object}
+
+    The new JSON object should follow the following format and make sure not to remove any of the existing data:
+    {
+        "Name": "<Subdistrict Name>",
+        "Population": <Population as Number>,
+        "Diameter in km": "<Subdistrict Diameter>",
+        "Position": ["<Latitude>", "<Longitude>"],
+        "Description": "<Subdistrict Description>",
+        "Buildings of Interest": [{"Name": "<Building Name>", "Type": "<Building Type>", "Description": "<Building Description>"}],
+        "Buildings": [
+            {
+                "Name": "<Building Name>",
+                "Type": "<Building Type (House, Shop, Other)>",
+                "Population": <Population as Number, this should be based on the Building Type>,
+                "Description": "<Building Description>"
+            }
+        ]
+    }
+
+    Make sure to make the Buildings unique and have a purpose in the subdistrict.
+    Make sure the total Occupants of the Buildings does not exceed the Population of the Subdistrict.
+    The number of Buildings should be between 5 and 30 depending on the size of the Subdistrict.
+    It is absolutely critical that all "Buildings of Interest" are included in the Buildings array.
+
+    Again, make sure not to remove any of the existing data or create any objects not in the format above.
+    Respond only with valid JSON. Do not write an introduction or summary.
+    """,
+    "format": {
+        "type": "object",
+        "properties": {
+            "Name": {"type": "string"},
+            "Population": {"type": "number"},
+            "Diameter in km": {"type": "number"},
+            "Position": {
+                "type": "array",
+                "items": {"type": "string"}
+            },
+            "Description": {"type": "string"},
+            "Buildings of Interest": {
+                "type": "array",
+                "items": {
+                    "type": "object",
+                    "properties": {
+                        "Name": {"type": "string"},
+                        "Type": {"type": "string"},
+                        "Description": {"type": "string"}
+                    },
+                    "required": ["Name", "Type", "Description"]
+                }
+            },
+            "Buildings": {
+                "type": "array",
+                "items": {
+                    "type": "object",
+                    "properties": {
+                        "Name": {"type": "string"},
+                        "Type": {"type": "string"},
+                        "Population": {"type": "number"},
+                        "Description": {"type": "string"}
+                    },
+                    "required": ["Name", "Type", "Population", "Description"]
+                }
+            }
+        },
+        "required": ["Name", "Population", "Diameter in km", "Position", "Description", "Buildings of Interest", "Buildings"]
+    },
+    "number_of_user_messages": 1
+}
+
+family_level_ai_messages = {
+    "system_message": """
+    You are an AI who"s goal is to create an entirely new and unheard of world. With the goal of adding more detail to the world, you will be adding a new families to a given house.
+    These families need to be unique and have a purpose in the house. There needs to be enough family members to fill the house completely.
+
+    A house should have between 1 and 6 people living in it.
+    with 1 to 3 adults and 0 to 3 children.
+    """,
+    "user_message_1": """
+    Generate a family for the house depending on the population of the house.
+    There is no gender issues in this world, so the family can be any combination of adults and children.
+    The family should be unique and have a purpose in the house.
+
+    Update the following JSON object:
+    {JSON Object}
+
+    The new JSON object should follow the following format and make sure not to remove any of the existing data:
+    {
+        "Name": "<Building Name>",
+        "Type": "<Building Type (House, Shop, Other)>",
+        "Population": <Population as Number>,
+        "Description": "<Building Description>",
+        "Families": [
+            {
+                "Name": "<Family Name>",
+                "Members": [
+                    {
+                        "Name": "<Family Member Full Name>",
+                        "Age": <Family Member Age as Number>,
+                        "Role": "<Family Member Role (Adult, Child)>",
+                        "Job": "<Family Member Job>",
+                        "Family Relation": {"Name": "<Family Member Name>", "Relation": "<Family Member Relation>"},
+                        "Description": "<Family Member Description>"
+                    }
+                ]
+            }
+        ]
+    }
+    There should only be 1 to 2 families in the house depending on the population of the house.
+    Ensure that all family members are created within the population of the house.
+    Make sure the total number of family members does not exceed the Population of the House.
+    The number of family members should be between 1 and 6 depending on the size of the House.
+
+    Again, make sure not to remove any of the existing data or create any objects not in the format above.
+    Respond only with valid JSON. Do not write an introduction or summary.
+    """,
+    "format": {
+        "type": "object",
+        "properties": {
+            "Name": {"type": "string"},
+            "Type": {"type": "string"},
+            "Population": {"type": "number"},
+            "Description": {"type": "string"},
+            "Families": {
+                "type": "array",
+                "items": {
+                    "type": "object",
+                    "properties": {
+                        "Name": {"type": "string"},
+                        "Members": {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "Name": {"type": "string"},
+                                    "Age": {"type": "number"},
+                                    "Role": {"type": "string"},
+                                    "Job": {"type": "string"},
+                                    "Family Relation": {
+                                        "type": "object",
+                                        "properties": {
+                                            "Name": {"type": "string"},
+                                            "Relation": {"type": "string"}
+                                        },
+                                        "required": ["Name", "Relation"]
+                                    },
+                                    "Description": {"type": "string"}
+                                },
+                                "required": ["Name", "Age", "Role", "Job", "Family Relation", "Description"]
+                            }
+                        }
+                    },
+                    "required": ["Name", "Members"]
+                }
+            }
+        },
+        "required": ["Name", "Type", "Population", "Description", "Families"]
+    },
+    "number_of_user_messages": 1
+}
+
+person_level_ai_messages = {
+    "system_message": """sleep
+    You are an AI who"s goal is to create an entirely new and unheard of world. With the goal of adding more detail to the world, you will be adding a new people to a given family.
+    These people need to be unique and have a purpose in the family, and the civilization as a whole. These people need to have traits and enough information to be a complete person.
+    """,
+    "user_message_1": """
+    Generate a person in full detail for the family depending on the population of the family.
+    The person should be unique and have a purpose in the family and the civilization.
+
+    Update the following JSON object:
+    {JSON Object}
+
+    The new JSON object should follow the following format and make sure not to remove any of the existing data:
+    {
+        "Name": "<Family Member Full Name>",
+        "Age": <Family Member Age as Number>,
+        "Role": "<Family Member Role (Adult, Child)>",
+        "Job": "<Family Member Job>",
+        "Family Relation": {"Name": "<Family Member Name>", "Relation": "<Family Member Relation>"},
+        "Description": "<Family Member Description>",
+        "Traits": [
+            {
+                "Name": "<Trait Name>",
+                "Description": "<Trait Description>"
+            }
+        ],
+        "Skills": [
+            {
+                "Name": "<Skill Name>",
+                "Description": "<Skill Description>"
+            }
+        ],
+        "Hobbies": [
+            {
+                "Name": "<Hobby Name>",
+                "Description": "<Hobby Description>"
+            }
+        ],
+        "Personal Beliefs": [
+            {
+                "Name": "<Belief Name>",
+                "Description": "<Belief Description>"
+            }
+        ]
+    }
+
+    This Person need feel complete and have a purpose in the family and the civilization.
+    This Person should have between 1 and 5 traits, 1 and 5 skills, 1 and 5 hobbies, and 1 and 5 personal beliefs, all based on the person's age and role.
+    Their job should be based on their age and role.
+    Their traits, skills, hobbies, and personal beliefs should be based on their age and job.
+    
+    Again, make sure not to remove any of the existing data or create any objects not in the format above.
+    Respond only with valid JSON. Do not write an introduction or summary.
+    """,
+    "format": {
+        "type": "object",
+        "properties": {
+            "Name": {"type": "string"},
+            "Age": {"type": "number"},
+            "Role": {"type": "string"},
+            "Job": {"type": "string"},
+            "Family Relation": {
+                "type": "object",
+                "properties": {
+                    "Name": {"type": "string"},
+                    "Relation": {"type": "string"}
+                },
+                "required": ["Name", "Relation"]
+            },
+            "Description": {"type": "string"},
+            "Traits": {
+                "type": "array",
+                "items": {
+                    "type": "object",
+                    "properties": {
+                        "Name": {"type": "string"},
+                        "Description": {"type": "string"}
+                    },
+                    "required": ["Name", "Description"]
+                }
+            },
+            "Skills": {
+                "type": "array",
+                "items": {
+                    "type": "object",
+                    "properties": {
+                        "Name": {"type": "string"},
+                        "Description": {"type": "string"}
+                    },
+                    "required": ["Name", "Description"]
+                }
+            },
+            "Hobbies": {
+                "type": "array",
+                "items": {
+                    "type": "object",
+                    "properties": {
+                        "Name": {"type": "string"},
+                        "Description": {"type": "string"}
+                    },
+                    "required": ["Name", "Description"]
+                }
+            },
+            "Personal Beliefs": {
+                "type": "array",
+                "items": {
+                    "type": "object",
+                    "properties": {
+                        "Name": {"type": "string"},
+                        "Description": {"type": "string"}
+                    },
+                    "required": ["Name", "Description"]
+                }
+            }
+        },
+        "required": ["Name", "Age", "Role", "Job", "Family Relation", "Description", "Traits", "Skills", "Hobbies", "Personal Beliefs"]
     },
     "number_of_user_messages": 1
 }
