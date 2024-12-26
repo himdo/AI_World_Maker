@@ -270,7 +270,7 @@ region_level_ai_messages = {
                                 "properties": {
                                     "Name": {"type": "string"},
                                     "Type": {"type": "string"},
-                                    "Population": {"type": "number"},
+                                    "Population": {"type": "integer"},
                                     "Diameter in km": {"type": "number"},
                                     "Government": {"type": "string"},
                                     "Position": {
@@ -354,7 +354,7 @@ district_level_ai_messages = {
         "properties": {
             "Name": {"type": "string"},
             "Type": {"type": "string"},
-            "Population": {"type": "number"},
+            "Population": {"type": "integer"},
             "Diameter in km": {"type": "number"},
             "Government": {"type": "string"},
             "Position": {
@@ -369,7 +369,7 @@ district_level_ai_messages = {
                     "properties": {
                         "Name": {"type": "string"},
                         "Type": {"type": "string"},
-                        "Population": {"type": "number"},
+                        "Population": {"type": "integer"},
                         "Diameter in km": {"type": "number"},
                         "Position": {
                             "type": "array",
@@ -431,7 +431,7 @@ subdistrict_level_ai_messages = {
         "properties": {
             "Name": {"type": "string"},
             "Type": {"type": "string"},
-            "Population": {"type": "number"},
+            "Population": {"type": "integer"},
             "Diameter in km": {"type": "number"},
             "Position": {
                 "type": "array",
@@ -444,7 +444,7 @@ subdistrict_level_ai_messages = {
                     "type": "object",
                     "properties": {
                         "Name": {"type": "string"},
-                        "Population": {"type": "number"},
+                        "Population": {"type": "integer"},
                         "Diameter in km": {"type": "number"},
                         "Position": {
                             "type": "array",
@@ -516,7 +516,7 @@ house_level_ai_messages = {
         "type": "object",
         "properties": {
             "Name": {"type": "string"},
-            "Population": {"type": "number"},
+            "Population": {"type": "integer"},
             "Diameter in km": {"type": "number"},
             "Position": {
                 "type": "array",
@@ -542,7 +542,7 @@ house_level_ai_messages = {
                     "properties": {
                         "Name": {"type": "string"},
                         "Type": {"type": "string"},
-                        "Population": {"type": "number"},
+                        "Population": {"type": "integer"},
                         "Description": {"type": "string"}
                     },
                     "required": ["Name", "Type", "Population", "Description"]
@@ -578,10 +578,11 @@ family_level_ai_messages = {
         "Description": "<Building Description>",
         "Families": [
             {
-                "Name": "<Family Name>",
+                "Family Name": "<Family Name>",
                 "Members": [
                     {
-                        "Name": "<Family Member Full Name>",
+                        "Family Name": "<Family Member Family Name>",
+                        "First Name": "<Family Member First Name>",
                         "Age": <Family Member Age as Number>,
                         "Role": "<Family Member Role (Adult, Child)>",
                         "Job": "<Family Member Job>",
@@ -605,21 +606,22 @@ family_level_ai_messages = {
         "properties": {
             "Name": {"type": "string"},
             "Type": {"type": "string"},
-            "Population": {"type": "number"},
+            "Population": {"type": "integer"},
             "Description": {"type": "string"},
             "Families": {
                 "type": "array",
                 "items": {
                     "type": "object",
                     "properties": {
-                        "Name": {"type": "string"},
+                        "Family Name": {"type": "string"},
                         "Members": {
                             "type": "array",
                             "items": {
                                 "type": "object",
                                 "properties": {
-                                    "Name": {"type": "string"},
-                                    "Age": {"type": "number"},
+                                    "Family Name": {"type": "string"},
+                                    "First Name": {"type": "string"},
+                                    "Age": {"type": "integer", "minimum":0, "maximum": 60},
                                     "Role": {"type": "string"},
                                     "Job": {"type": "string"},
                                     "Family Relation": {
@@ -632,11 +634,11 @@ family_level_ai_messages = {
                                     },
                                     "Description": {"type": "string"}
                                 },
-                                "required": ["Name", "Age", "Role", "Job", "Family Relation", "Description"]
+                                "required": ["First Name", "Family Name", "Age", "Role", "Job", "Family Relation", "Description"]
                             }
                         }
                     },
-                    "required": ["Name", "Members"]
+                    "required": ["Family Name", "Members"]
                 }
             }
         },
@@ -659,7 +661,8 @@ person_level_ai_messages = {
 
     The new JSON object should follow the following format and make sure not to remove any of the existing data:
     {
-        "Name": "<Family Member Full Name>",
+        "Family Name": "<Family Member Family Name>",
+        "First Name": "<Family Member First Name>",
         "Age": <Family Member Age as Number>,
         "Role": "<Family Member Role (Adult, Child)>",
         "Job": "<Family Member Job>",
@@ -702,7 +705,8 @@ person_level_ai_messages = {
     "format": {
         "type": "object",
         "properties": {
-            "Name": {"type": "string"},
+            "Family Name": {"type": "string"},
+            "First Name": {"type": "string"},
             "Age": {"type": "number"},
             "Role": {"type": "string"},
             "Job": {"type": "string"},
@@ -760,7 +764,7 @@ person_level_ai_messages = {
                 }
             }
         },
-        "required": ["Name", "Age", "Role", "Job", "Family Relation", "Description", "Traits", "Skills", "Hobbies", "Personal Beliefs"]
+        "required": ["Family Name", "First Name", "Age", "Role", "Job", "Family Relation", "Description", "Traits", "Skills", "Hobbies", "Personal Beliefs"]
     },
     "number_of_user_messages": 1
 }
