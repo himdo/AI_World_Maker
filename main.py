@@ -44,21 +44,16 @@ def create_continents(world_json_file, chat_history_filename="continent_chat_his
         continent_number = 1
         for continent in world_data["Continents"]:
             print('working on continent ', continent['Name'], ' ', continent_number, ' out of ', len(world_data["Continents"]))
-            attempts_to_generate_success = 0
-            temperature = 0.8
             while True:
-                attempts_to_generate_success += 1
                 try:
-                    if attempts_to_generate_success > 3:
-                        temperature += 0.01
-                        print("Failed to generate continent data after", attempts_to_generate_success,  "attempts. Updating temperature to ", temperature)
-                        attempts_to_generate_success = 0
                     continent_level_ai = AIAgent('http://192.168.1.182:11434', model, continent_level_ai_messages['system_message'])
                     if load_chat_history:
                         continent_level_ai.load_chat_history(chat_history_filename)
                     else:
                         for i in range(continent_level_ai_messages['number_of_user_messages']):
-                            continent_level_ai.send_request({'role':'user','content': continent_level_ai_messages['user_message_'+str(i+1)].replace('{JSON Object}',json.dumps(continent))}, continent_level_ai_messages['format'], {'temperature': temperature})
+                            json_format = continent_level_ai_messages['format'].copy()
+                            json_format["properties"]["Name"] = {"const": continent["Name"]}
+                            continent_level_ai.send_request({'role':'user','content': continent_level_ai_messages['user_message_'+str(i+1)].replace('{JSON Object}',json.dumps(continent))}, json_format)
 
                     continent_level_ai_chat_history = continent_level_ai.return_chat_history()
                     continent_level_ai.save_chat_history(chat_history_filename)
@@ -96,14 +91,7 @@ def create_regions(world_json_file, chat_history_filename="region_chat_history.j
         for continent in world_data["Continents"]:
             region_number = 1
             for region in continent["Regions"]:
-                attempts_to_generate_success = 0
-                temperature = 0.8
                 while True:
-                    attempts_to_generate_success += 1
-                    if attempts_to_generate_success > 3:
-                        temperature += 0.01
-                        print("Failed to generate region data after", attempts_to_generate_success,  "attempts. Updating temperature to ", temperature)
-                        attempts_to_generate_success = 0
                     try:
                         region_level_ai = AIAgent('http://192.168.1.182:11434', model, region_level_ai_messages['system_message'])
                         if load_chat_history:
@@ -112,8 +100,12 @@ def create_regions(world_json_file, chat_history_filename="region_chat_history.j
                             for i in range(region_level_ai_messages['number_of_user_messages']):
                                 formatted_continent = continent.copy()
                                 formatted_continent['Regions'] = [region]
+                                json_format = region_level_ai_messages['format'].copy()
+                                json_format["properties"]["Name"] = {"const": formatted_continent["Name"]}
+                                json_format["properties"]["Regions"]["items"]["properties"]["Name"] = {"const": region["Name"]}
+
                                 print("working on region ", region['Name'], ' ', region_number, ' out of ', len(continent["Regions"]), ' in continent ', continent['Name'])
-                                region_level_ai.send_request({'role':'user','content': region_level_ai_messages['user_message_'+str(i+1)].replace('{JSON Object}',json.dumps(formatted_continent))}, region_level_ai_messages['format'], {'temperature': temperature})
+                                region_level_ai.send_request({'role':'user','content': region_level_ai_messages['user_message_'+str(i+1)].replace('{JSON Object}',json.dumps(formatted_continent))}, json_format)
 
                         region_level_ai_chat_history = region_level_ai.return_chat_history()
                         region_level_ai.save_chat_history(chat_history_filename)
@@ -160,22 +152,17 @@ def create_districts(world_json_file, chat_history_filename="district_chat_histo
             for region in continent["Regions"]:
                 civilization_number = 1
                 for civilization in region["Civilizations"]:
-                    attempts_to_generate_success = 0
-                    temperature = 0.8
                     while True:
-                        attempts_to_generate_success += 1
                         try:
-                            if attempts_to_generate_success > 3:
-                                temperature += 0.01
-                                print("Failed to generate district data after", attempts_to_generate_success,  "attempts. Updating temperature to ", temperature)
-                                attempts_to_generate_success = 0
                             district_level_ai = AIAgent('http://192.168.1.182:11434', model, district_level_ai_messages['system_message'])
                             if load_chat_history:
                                 district_level_ai.load_chat_history(chat_history_filename)
                             else:
                                 for i in range(district_level_ai_messages['number_of_user_messages']):
                                     print("working on civilization ", civilization['Name'], ' ', civilization_number, ' out of ', len(region["Civilizations"]), ' in region ', region['Name'])
-                                    district_level_ai.send_request({'role':'user','content': district_level_ai_messages['user_message_'+str(i+1)].replace('{JSON Object}',json.dumps(civilization))}, district_level_ai_messages['format'], {'temperature': temperature})
+                                    json_format = district_level_ai_messages['format'].copy()
+                                    json_format["properties"]["Name"] = {"const": civilization["Name"]}
+                                    district_level_ai.send_request({'role':'user','content': district_level_ai_messages['user_message_'+str(i+1)].replace('{JSON Object}', json.dumps(civilization))}, json_format)
                             district_level_ai_chat_history = district_level_ai.return_chat_history()
                             district_level_ai.save_chat_history(chat_history_filename)
                             latest_history = district_level_ai_chat_history.pop()['content']
@@ -218,22 +205,17 @@ def create_subdistricts(world_json_file, chat_history_filename="subdistrict_chat
                 for civilization in region["Civilizations"]:
                     district_number = 1
                     for district in civilization["Districts"]:
-                        attempts_to_generate_success = 0
-                        temperature = 0.8
                         while True:
-                            attempts_to_generate_success += 1
-                            if attempts_to_generate_success > 3:
-                                temperature += 0.01
-                                print("Failed to generate subdistrict data after", attempts_to_generate_success,  "attempts. Updating temperature to ", temperature)
-                                attempts_to_generate_success = 0
                             try:
                                 subdistrict_level_ai = AIAgent('http://192.168.1.182:11434', model, subdistrict_level_ai_messages['system_message'])
                                 if load_chat_history:
                                     subdistrict_level_ai.load_chat_history(chat_history_filename)
                                 else:
                                     for i in range(subdistrict_level_ai_messages['number_of_user_messages']):
+                                        json_format = subdistrict_level_ai_messages['format'].copy()
+                                        json_format["properties"]["Name"] = {"const": district["Name"]}
                                         print("working on district ", district['Name'], ' ', district_number, ' out of ', len(civilization["Districts"]), ' in civilization ', civilization['Name'])
-                                        subdistrict_level_ai.send_request({'role':'user','content': subdistrict_level_ai_messages['user_message_'+str(i+1)].replace('{JSON Object}',json.dumps(district))}, subdistrict_level_ai_messages['format'], {'temperature': temperature})
+                                        subdistrict_level_ai.send_request({'role':'user','content': subdistrict_level_ai_messages['user_message_'+str(i+1)].replace('{JSON Object}',json.dumps(district))}, json_format)
                                 
                                 subdistrict_level_ai_chat_history = subdistrict_level_ai.return_chat_history()
                                 subdistrict_level_ai.save_chat_history(chat_history_filename)
@@ -279,14 +261,7 @@ def create_households(world_json_file, chat_history_filename="household_chat_his
                     for district in civilization["Districts"]:
                         subdistrict_number = 1
                         for subdistrict in district["Subdistricts"]:
-                            attempts_to_generate_success = 0
-                            temperature = 0.8
                             while True:
-                                attempts_to_generate_success += 1
-                                if attempts_to_generate_success > 3:
-                                    temperature += 0.01
-                                    print("Failed to generate household data after", attempts_to_generate_success,  "attempts. Updating temperature to ", temperature)
-                                    attempts_to_generate_success = 0
                                 try:
                                     household_level_ai = AIAgent('http://192.168.1.182:11434', model, house_level_ai_messages['system_message'])
                                     if load_chat_history:
@@ -294,7 +269,9 @@ def create_households(world_json_file, chat_history_filename="household_chat_his
                                     else:
                                         for i in range(house_level_ai_messages['number_of_user_messages']):
                                             print("working on subdistrict ", subdistrict['Name'], ' ', subdistrict_number, ' out of ', len(district["Subdistricts"]), ' in district ', district['Name'])
-                                            household_level_ai.send_request({'role':'user','content': house_level_ai_messages['user_message_'+str(i+1)].replace('{JSON Object}',json.dumps(subdistrict))}, house_level_ai_messages['format'], {'temperature': temperature})
+                                            json_format = house_level_ai_messages['format'].copy()
+                                            json_format["properties"]["Name"] = {"const": subdistrict["Name"]}
+                                            household_level_ai.send_request({'role':'user','content': house_level_ai_messages['user_message_'+str(i+1)].replace('{JSON Object}',json.dumps(subdistrict))}, json_format)
 
                                     household_level_ai_chat_history = household_level_ai.return_chat_history()
                                     household_level_ai.save_chat_history(chat_history_filename)
@@ -341,32 +318,27 @@ def create_families(world_json_file, chat_history_filename="family_chat_history.
                         subdistrict_number = 1
                         for subdistrict in district["Subdistricts"]:
                             household_number = 1
-                            for household in subdistrict["Households"]:
-                                attempts_to_generate_success = 0
-                                temperature = 0.8
+                            for household in subdistrict["Buildings"]:
                                 while True:
-                                    attempts_to_generate_success += 1
-                                    if attempts_to_generate_success > 3:
-                                        temperature += 0.01
-                                        print("Failed to generate family data after", attempts_to_generate_success,  "attempts. Updating temperature to ", temperature)
-                                        attempts_to_generate_success = 0
                                     try:
                                         family_level_ai = AIAgent('http://192.168.1.182:11434', model, family_level_ai_messages['system_message'])
                                         if load_chat_history:
                                             family_level_ai.load_chat_history(chat_history_filename)
                                         else:
                                             for i in range(family_level_ai_messages['number_of_user_messages']):
-                                                print("working on household ", household['Name'], ' ', household_number, ' out of ', len(subdistrict["Households"]), ' in subdistrict ', subdistrict['Name'])
-                                                family_level_ai.send_request({'role':'user','content': family_level_ai_messages['user_message_'+str(i+1)].replace('{JSON Object}',json.dumps(household))}, family_level_ai_messages['format'], {'temperature': temperature})
+                                                print("working on household ", household['Name'], ' ', household_number, ' out of ', len(subdistrict["Buildings"]), ' in subdistrict ', subdistrict['Name'])
+                                                json_format = family_level_ai_messages['format'].copy()
+                                                json_format["properties"]["Name"] = {"const": household["Name"]}
+                                                family_level_ai.send_request({'role':'user','content': family_level_ai_messages['user_message_'+str(i+1)].replace('{JSON Object}',json.dumps(household))}, json_format)
 
                                         family_level_ai_chat_history = family_level_ai.return_chat_history()
                                         family_level_ai.save_chat_history(chat_history_filename)
                                         latest_history = family_level_ai_chat_history.pop()['content']
                                         family_data = json.loads(latest_history)
                                         found_match = False
-                                        for j in range(len(subdistrict["Households"])):
-                                            if subdistrict["Households"][j]["Name"] == family_data["Name"]:
-                                                subdistrict["Households"][j] = family_data
+                                        for j in range(len(subdistrict["Buildings"])):
+                                            if subdistrict["Buildings"][j]["Name"] == family_data["Name"]:
+                                                subdistrict["Buildings"][j] = family_data
                                                 found_match = True
                                                 break
                                         if not found_match:
@@ -405,50 +377,50 @@ def create_persons(world_json_file, chat_history_filename="person_chat_history.j
                         subdistrict_number = 1
                         for subdistrict in district["Subdistricts"]:
                             household_number = 1
-                            for household in subdistrict["Households"]:
+                            for household in subdistrict["Buildings"]:
                                 family_number = 1
                                 for family in household["Families"]:
-                                    attempts_to_generate_success = 0
-                                    temperature = 0.8
-                                    while True:
-                                        attempts_to_generate_success += 1
-                                        if attempts_to_generate_success > 3:
-                                            temperature += 0.01
-                                            print("Failed to generate person data after", attempts_to_generate_success,  "attempts. Updating temperature to ", temperature)
-                                            attempts_to_generate_success = 0
-                                        try:
-                                            person_level_ai = AIAgent('http://192.168.1.182:11434', model, person_level_ai_messages['system_message'])
-                                            if load_chat_history:
-                                                person_level_ai.load_chat_history(chat_history_filename)
-                                            else:
-                                                for i in range(person_level_ai_messages['number_of_user_messages']):
-                                                    print("working on family ", family['Name'], ' ', family_number, ' out of ', len(household["Families"]), ' in household ', household['Name'])
-                                                    person_level_ai.send_request({'role':'user','content': person_level_ai_messages['user_message_'+str(i+1)].replace('{JSON Object}',json.dumps(family))}, person_level_ai_messages['format'], {'temperature': temperature})
+                                    for person in family["Members"]:
+                                        while True:
+                                            try:
+                                                person_level_ai = AIAgent('http://192.168.1.182:11434', model, person_level_ai_messages['system_message'])
+                                                if load_chat_history:
+                                                    person_level_ai.load_chat_history(chat_history_filename)
+                                                else:
+                                                    for i in range(person_level_ai_messages['number_of_user_messages']):
+                                                        print("working on person ", person['First Name'], ' ', family_number, ' out of ', len(household["Families"]), ' in household ', household['Name'])
+                                                        json_format = person_level_ai_messages['format'].copy()
+                                                        json_format["properties"]["Family Name"] = {"const": person["Family Name"]}
+                                                        json_format["properties"]["First Name"] = {"const": person["First Name"]}
+                                                        person_level_ai.send_request({'role':'user','content': person_level_ai_messages['user_message_'+str(i+1)].replace('{JSON Object}',json.dumps(family))}, person_level_ai_messages['format'])
 
-                                            person_level_ai_chat_history = person_level_ai.return_chat_history()
-                                            person_level_ai.save_chat_history(chat_history_filename)
-                                            latest_history = person_level_ai_chat_history.pop()['content']
-                                            person_data = json.loads(latest_history)
-                                            found_match = False
-                                            for j in range(len(household["Families"])):
-                                                if household["Families"][j]["Name"] == person_data["Name"]:
-                                                    household["Families"][j] = person_data
-                                                    found_match = True
-                                                    break
-                                            if not found_match:
-                                                print("Could not find family", family["Name"], "in household", household["Name"], "Retrying")
-                                                continue
-                                            world_path = "./worlds/"+world_data["World Name"]
+                                                person_level_ai_chat_history = person_level_ai.return_chat_history()
+                                                person_level_ai.save_chat_history(chat_history_filename)
+                                                latest_history = person_level_ai_chat_history.pop()['content']
+                                                person_data = json.loads(latest_history)
+                                                found_match = False
+                                                for j in range(len(household["Families"])):
+                                                    for k in range(len(household["Families"][j]["Members"])):
+                                                        if household["Families"][j]["Members"][k]["First Name"] == person_data["First Name"]:
+                                                            household["Families"][j]["Members"][k] = person_data
+                                                            found_match = True
+                                                            break
+                                                    
+                                                if not found_match:
+                                                    print("Could not find family", family["Family Name"], "in household", household["Name"], "Retrying")
+                                                    continue
+                                                world_path = "./worlds/"+world_data["World Name"]
 
-                                            Path(world_path).mkdir(parents=True, exist_ok=True)
-                                            write_json(world_data, "world_"+world_data["World Name"]+".json")
-                                            write_json(world_data, world_path+"/world_"+world_data["World Name"]+".json")
-                                            person_level_ai.save_chat_history(world_path+'/person_chat_history_'+family['Name']+'.json')
-                                            break
-                                        except Exception:
-                                            print(traceback.format_exc())
-                                            print("Error loading person data")
-                                            return
+                                                Path(world_path).mkdir(parents=True, exist_ok=True)
+                                                write_json(world_data, "world_"+world_data["World Name"]+".json")
+                                                write_json(world_data, world_path+"/world_"+world_data["World Name"]+".json")
+                                                person_level_ai.save_chat_history(world_path+'/person_chat_history_'+person['First Name']+person['Family Name']+'.json')
+                                                break
+                                            except Exception:
+                                                print(traceback.format_exc())
+                                                print("Error loading person data")
+                                                return
+                                        
                                     family_number += 1
                                 household_number += 1
                             subdistrict_number += 1
@@ -469,6 +441,7 @@ def create_whole_world():
     world_data = create_subdistricts(world_data_json_path)
     world_data = create_households(world_data_json_path)
     world_data = create_families(world_data_json_path)
+    world_data = create_persons(world_data_json_path)
 
 if __name__ == "__main__":
     create_whole_world()

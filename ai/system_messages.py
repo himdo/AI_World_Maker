@@ -65,7 +65,9 @@ world_level_ai_messages = {
                         }
                     },
                     "required": ["Name", "Diameter in km", "Position", "Features"]
-                }
+                }, 
+                "minItems": 1,
+                "maxItems": 7
             },
             "Oceans": {
                 "type": "array",
@@ -143,7 +145,7 @@ continent_level_ai_messages = {
     "format": {
         "type": "object",
         "properties": {
-            "Name": {"type": "string"},
+            "Name": {"const": "{Continent Name}"},
             "Diameter in km": {"type": "number"},
             "Position": {
                 "type": "array",
@@ -190,7 +192,9 @@ continent_level_ai_messages = {
                         }
                     },
                     "required": ["Name", "Diameter in km", "Position", "Landmarks", "Resources"]
-                }
+                },
+                "minItems": 1,
+                "maxItems": 10
             }
         },
         "required": ["Name", "Diameter in km", "Position", "Features", "Climate", "Regions"]
@@ -241,7 +245,7 @@ region_level_ai_messages = {
                 "items": {
                     "type": "object",
                     "properties": {
-                        "Name": {"type": "string"},
+                        "Name": {"const": "{Region Name}"},
                         "Diameter in km": {"type": "number"},
                         "Position": {
                             "type": "array",
@@ -280,13 +284,15 @@ region_level_ai_messages = {
                                     "Description": {"type": "string"}
                                 },
                                 "required": ["Name", "Type", "Population", "Diameter in km", "Government", "Position", "Description"]
-                            }
+                            },
+                            "minItems": 3,
+                            "maxItems": 9,
                         }
                     }
                 },
                 "required": ["Name", "Diameter in km", "Position", "Landmarks", "Resources", "Civilizations"]
             },
-            "Name": {"type": "string"},
+            "Name": {"const": "{Continent Name}"},
             "Diameter in km": {"type": "number"},
             "Position": {
                 "type": "array",
@@ -352,7 +358,7 @@ district_level_ai_messages = {
     "format": {
         "type": "object",
         "properties": {
-            "Name": {"type": "string"},
+            "Name": {"const": "{Civilization Name}"},
             "Type": {"type": "string"},
             "Population": {"type": "integer"},
             "Diameter in km": {"type": "number"},
@@ -378,7 +384,9 @@ district_level_ai_messages = {
                         "Description": {"type": "string"}
                     },
                     "required": ["Name", "Type", "Population", "Diameter in km", "Position", "Description"]
-                }
+                },
+                "minItems": 5,
+                "maxItems": 10
             }
         },
         "required": ["Name", "Type", "Population", "Diameter in km", "Government", "Position", "Description", "Districts"]
@@ -429,7 +437,7 @@ subdistrict_level_ai_messages = {
     "format": {
         "type": "object",
         "properties": {
-            "Name": {"type": "string"},
+            "Name": {"const": "{District Name}"},
             "Type": {"type": "string"},
             "Population": {"type": "integer"},
             "Diameter in km": {"type": "number"},
@@ -465,7 +473,9 @@ subdistrict_level_ai_messages = {
                         }
                     },
                     "required": ["Name", "Population", "Diameter in km", "Position", "Description", "Buildings of Interest"]
-                }
+                },
+                "minItems": 1,
+                "maxItems": 10
             }
         },
         "required": ["Name", "Population", "Diameter in km", "Position", "Description", "Subdistricts"]
@@ -515,7 +525,7 @@ house_level_ai_messages = {
     "format": {
         "type": "object",
         "properties": {
-            "Name": {"type": "string"},
+            "Name": {"const": "{Subdistrict Name}"},
             "Population": {"type": "integer"},
             "Diameter in km": {"type": "number"},
             "Position": {
@@ -546,7 +556,9 @@ house_level_ai_messages = {
                         "Description": {"type": "string"}
                     },
                     "required": ["Name", "Type", "Population", "Description"]
-                }
+                },
+                "maxItems": 5,
+                "maxItems": 30
             }
         },
         "required": ["Name", "Population", "Diameter in km", "Position", "Description", "Buildings of Interest", "Buildings"]
@@ -597,6 +609,7 @@ family_level_ai_messages = {
     Ensure that all family members are created within the population of the house.
     Make sure the total number of family members does not exceed the Population of the House.
     The number of family members should be between 1 and 6 depending on the size of the House.
+    The Family Name should be unique and the Family Member Family Name should be the same as the Family Name.
 
     Again, make sure not to remove any of the existing data or create any objects not in the format above.
     Respond only with valid JSON. Do not write an introduction or summary.
@@ -604,7 +617,7 @@ family_level_ai_messages = {
     "format": {
         "type": "object",
         "properties": {
-            "Name": {"type": "string"},
+            "Name": {"const": "{Building Name}"},
             "Type": {"type": "string"},
             "Population": {"type": "integer"},
             "Description": {"type": "string"},
@@ -635,7 +648,9 @@ family_level_ai_messages = {
                                     "Description": {"type": "string"}
                                 },
                                 "required": ["First Name", "Family Name", "Age", "Role", "Job", "Family Relation", "Description"]
-                            }
+                            },
+                            "minItems": 1,
+                            "maxItems": 6
                         }
                     },
                     "required": ["Family Name", "Members"]
@@ -705,8 +720,8 @@ person_level_ai_messages = {
     "format": {
         "type": "object",
         "properties": {
-            "Family Name": {"type": "string"},
-            "First Name": {"type": "string"},
+            "Family Name": {"const": "{Family Member Family Name}"},
+            "First Name": {"const": "{Family Member First Name}"},
             "Age": {"type": "number"},
             "Role": {"type": "string"},
             "Job": {"type": "string"},
